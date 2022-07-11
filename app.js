@@ -21,8 +21,15 @@ app.get("/", function(req, res) {
 
   var day = today.toLocaleDateString("en-us", options);
 
-  res.render("list", {kindOfDay: day, newListItem: items});
+  res.render("list", {kindOfDay: day, newListItems: items});
 });
+
+app.post("/", function(req, res) {
+  var item = req.body.newItem;
+  items.push(item);
+  res.redirect("/");
+});
+
 
 
 app.listen(3000, function() {

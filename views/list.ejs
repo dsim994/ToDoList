@@ -8,7 +8,12 @@
 
     <h1><%= kindOfDay %></h1>
 
-    <li><%= newListItem %></li>
+    <ul>
+      <% for (var i=0; i<newListItems.length; i++) { %>
+        <li><%= newListItems[i] %></li>
+      <% } %>
+    </ul>
+
 
     <form class="" action="/" method="post">
       <input type="text" name="newItem">
