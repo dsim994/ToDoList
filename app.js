@@ -1,7 +1,10 @@
 
 
+
+
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 const date = require(__dirname + "/date");
 
 
@@ -15,6 +18,27 @@ app.use(express.static("public"));
 
 const items = ["Buy Food", "Cook Food", "Eat Food"];
 const workItems = [];
+
+
+
+//Database
+
+main().catch(err => console.log(err));
+
+async function main() {
+  await mongoose.connect("mongodb://localhost:27017/todolistDB");
+}
+
+const itemsSchema = new mongoose.Schema ({
+  name: String
+});
+
+const Item = new mongoose.model("Item", itemsSchema);
+
+
+
+
+
 
 
 
