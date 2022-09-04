@@ -1,12 +1,9 @@
 
 
-
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const date = require(__dirname + "/date");
-
 
 const app = express();
 
@@ -18,6 +15,13 @@ app.use(express.static("public"));
 
 const items = ["Buy Food", "Cook Food", "Eat Food"];
 const workItems = [];
+
+
+
+
+
+
+
 
 
 
@@ -105,6 +109,20 @@ app.post("/", function(req, res) {
   //   items.push(item);
   //   res.redirect("/");
   // }
+});
+
+app.post("/delete", function(req, res) {
+
+  const checkedItemId = req.body.checkbox;
+
+
+
+  Item.findByIdAndRemove(checkedItemId, function(err) {
+    if (!err) {
+      console.log("Successfully updated the document");
+      res.redirect("/");
+    }
+  });
 });
 
 
