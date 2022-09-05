@@ -33,6 +33,11 @@ async function main() {
   await mongoose.connect("mongodb://localhost:27017/todolistDB");
 }
 
+
+
+
+//Item Database
+
 const itemsSchema = new mongoose.Schema ({
   name: String
 });
@@ -54,6 +59,23 @@ const item3 = new Item ({
 
 
 const defaultItems = [item1, item2, item3];
+
+
+
+
+
+
+//List Database
+
+const listSchema = ({
+  name: String,
+  items: [itemsSchema]
+});
+
+
+const List = new mongoose.model("List", listSchema);
+
+
 
 
 
@@ -85,6 +107,36 @@ app.get("/", function(req, res) {
 
 });
 
+
+
+
+
+//Custom Name Route
+app.get("/:customListName", function(req, res) {
+
+  const customListName = req.params.customListName;
+
+  List.findOne({name: customListName}, function(err, foundList) {
+    if (!err) {
+      if (!foundList) {
+
+          const list = new List({
+            name: customListName,
+            items: defaultItems
+          });
+
+          list.save();
+        res.redirect("/" + customListName);
+
+
+      } else {
+        res.render("list", {listTitle: foundList.name, newListItems: foundList.items});
+      }
+    }
+
+  });
+
+  });
 
 
 
