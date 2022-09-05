@@ -143,24 +143,26 @@ app.get("/:customListName", function(req, res) {
 app.post("/", function(req, res) {
 
   const itemName = req.body.newItem;
-
+  const listName = req.body.list;
 
   const item = new Item ({
     name: itemName
   });
 
-  item.save();
+  if (listName === "Today") {
 
-  res.redirect("/");
+    item.save();
+    res.redirect("/");
 
-  //
-  // if (req.body.list === "Work") {
-  //   workItems.push(item);
-  //   res.redirect("/work");
-  // } else {
-  //   items.push(item);
-  //   res.redirect("/");
-  // }
+  } else {
+
+    List.findOne({name: listName}, function(err, foundList) {
+      foundList.items.push(item);
+      foundList.save();
+      res.redirect("/" + listName);
+      
+    });
+  }
 });
 
 app.post("/delete", function(req, res) {
