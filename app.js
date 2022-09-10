@@ -29,7 +29,12 @@ const workItems = [];
 main().catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect("mongodb+srv://dsim994:Bimmer335i.@cluster0.lzeurjo.mongodb.net/todolistDB");
+
+  let atlasURI = "mongodb+srv://dsim994:Bimmer335i.@cluster0.lzeurjo.mongodb.net/todolistDB"
+
+  await mongoose.connect(atlasURI);
+  
+  console.log("DB connected");
 }
 
 
@@ -229,5 +234,5 @@ if (port == null || port == "") {
 }
 
 app.listen(port, function() {
-  console.log("Server started succesfully");
+  console.log("Server is running on port 3000!");
 });
